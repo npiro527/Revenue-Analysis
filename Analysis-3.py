@@ -49,7 +49,7 @@ print("Critical Values:")
 for key, value in dfuller[4].items():
     print(f"{key}: {value}")
    
-# Data is not stationary (p-value is 4.55), so need integrated (i) model is needed ARIMA (p, q, d)
+# Data is not stationary (p-value is 4.55), so need integrated (i) model is needed ARIMA (p, d, q)
 
 #%%
 ## Apply differencing to determine d
