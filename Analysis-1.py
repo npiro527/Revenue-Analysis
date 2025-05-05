@@ -52,7 +52,7 @@ print("Critical Values:")
 for key, value in dfuller[4].items():
     print(f"{key}: {value}")
    
-# Data is not stationary (p-value is .995), so need integrated (i) model is needed ARIMA (p, q, d)
+# Data is not stationary (p-value is .985), so need integrated (i) model is needed ARIMA (p, q, d)
 
 #%%
 ## Apply differencing to determine d
@@ -71,7 +71,7 @@ for key, value in dfuller_diff[4].items():
 # P-value is .00077 after one differencing, so d=1
 
 #%%
-## Run partial autocorrelation funcation to determine Aurogregressive order (p)
+## Run partial autocorrelation funcation to determine Auroregressive order (p)
 
 plt.figure(figsize=(8, 5))
 plot_pacf(pt_yearly["Differenced_AMOUNT"].dropna(), lags=14)
@@ -92,15 +92,8 @@ plt.xlabel("Lag")
 plt.ylabel("ACF")
 plt.show()
 
-# no lags exceed the blue shadow, so q = 0
-# Recommended ARIMA order is (0, 1, 0)
-
-#%%
-
-# Construct ARIMA (0, 1, 0)
-arima = ARIMA(pt_yearly["AMOUNT"], order=(0, 1, 0))
-arima_fit = arima.fit()
-print(arima_fit.summary())
+# No lags exceed the blue shadow, so q = 0
+### Recommended ARIMA order is (0, 1, 0)
 
 #%%
 ## Run Auto ARIMA to double check manual selection
@@ -114,6 +107,13 @@ print(auto_model.summary())
 rec_order = auto_model.order
 print(f"Ideal ARIMA order: {rec_order}")
 # Best fit model is ARIMA(0, 1, 0), so manual selection above works
+
+#%%
+## Build the recommended ARIMA manually
+# Construct ARIMA (0, 1, 0)
+arima = ARIMA(pt_yearly["AMOUNT"], order=(0, 1, 0))
+arima_fit = arima.fit()
+print(arima_fit.summary())
 
 #%% 
 ## Forecast two year in the future
@@ -130,7 +130,7 @@ plt.scatter(future_years, forecast_two_years, color='red', label="Forecast (Next
 
 plt.title("Property Tax Revenue Forecast for Next 2 Years")
 plt.xlabel("Year")
-plt.ylabel("Amount ($)")
+plt.ylabel("Amount (10s of Millions of $)")
 plt.legend()
 plt.grid()
 

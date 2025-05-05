@@ -68,7 +68,7 @@ for key, value in dfuller_diff[4].items():
 # P-value is .016 after one differencing, so d=1
 
 #%%
-## Run partial autocorrelation funcation to determine Aurogregressive order (p)
+## Run partial autocorrelation funcation to determine Auroregressive order (p)
 
 plt.figure(figsize=(8, 5))
 plot_pacf(st_yearly["Differenced_AMOUNT"].dropna(), lags=14)
@@ -77,7 +77,7 @@ plt.xlabel("Lag")
 plt.ylabel("PACF")
 plt.show()
 
-# no lags exceed the blue shadow, so p = 0
+# No lags exceed the blue shadow, so p = 0
 
 #%%
 ## Run autocorrelation function to determine MA order (q)
@@ -90,7 +90,7 @@ plt.ylabel("ACF")
 plt.show()
 
 # no lags exceed the blue shadow, so q = 0
-# Recommended ARIMA order is (0, 1, 0)
+### Recommended ARIMA order is (0, 1, 0)
 
 #%%
 ## Run Auto ARIMA to double check manual selection
@@ -106,7 +106,7 @@ print(f"Ideal ARIMA order: {rec_order}")
 # Best fit model is ARIMA(0, 1, 0), so manual selection above works
 
 #%%
-
+## Construct recommended ARIMA manually
 # Construct ARIMA (0, 1, 0)
 arima = ARIMA(st_yearly["AMOUNT"], order=(0, 1, 0))
 arima_fit = arima.fit()
@@ -127,7 +127,7 @@ plt.scatter(future_years, forecast_two_years, color='red', label="Forecast (Next
 
 plt.title("Sales Tax Revenue Forecast for Next 2 Years")
 plt.xlabel("Year")
-plt.ylabel("Amount ($)")
+plt.ylabel("Amount (10s of Millions of $)")
 plt.legend()
 plt.grid()
 
